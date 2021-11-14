@@ -1,5 +1,5 @@
 import prisma from '../database';
-import { Product } from '.prisma/client';
+import { Product,Role } from '.prisma/client';
 
 const product = {
 
@@ -34,7 +34,7 @@ const product = {
 
         try {
             await prisma.product.deleteMany({where:{userId :req.body.decoded.id, id  : parseInt(req.params.id,10) } });
-            res.status(201).json({message:'Deleted Successfully'});
+            res.status(200).json({message:'Deleted Successfully'});
         }catch(e){
             res.status(500).json({message : 'Internal Server Error !!'});
         }
@@ -44,7 +44,10 @@ const product = {
     // add product to the product table.
     addProduct: async (req:any,res:any)=>
     {
-
+        if(req.body.decoded.Role === Role.BUYER)
+        {
+            res.status(400).json({message : 'You need a seller account !!'});
+        }
         const productData:Product = {
             id     : undefined,
             name   : req.body.name,

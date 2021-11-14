@@ -64,7 +64,7 @@ const user = {
                 return res.status(400).json({message : 'Incorrect username or password !!'});
             res.status(200).json({user :currentUser});
         }catch(e){
-            res.status(400).json({message : 'username is incorrect !!'});
+            res.status(500).json({message : 'username is incorrect !!'});
         }
 
     },
@@ -118,7 +118,7 @@ const user = {
 
         if(req.body.decoded.Role === Role.SELLER)
         {
-            res.status(400).json({message : 'You need a buyer account !!'});
+            return res.status(400).json({message : 'You need a buyer account !!'});
         }
         let money:number =0 ;
 
@@ -148,7 +148,7 @@ const user = {
 
         if(req.body.decoded.Role === Role.SELLER)
         {
-            res.status(400).json({message : 'You need a buyer account !!'});
+            return res.status(400).json({message : 'You need a buyer account !!'});
         }
         try {
             // get buyer and product data
@@ -195,10 +195,7 @@ const user = {
     reset: async (req:any,res:any)=>
     {
 
-        if(req.body.decoded.Role === Role.SELLER)
-        {
-            res.status(400).json({message : 'You need a buyer account !!'});
-        }
+
         try {
             const buyer:User = await prisma.user.findUnique({where : {id : req.body.decoded.id}});
             let remainingPrice:number = buyer.deposit ;
