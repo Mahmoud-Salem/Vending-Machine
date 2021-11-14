@@ -28,6 +28,8 @@ This project aims to build a Vending machine where a user can buy products and s
 
     Prisma is used as an ORM with PostgreSQL as the database.
 
+    JWT is used for authentication and bcrypt for hashing passwords in the database.
+
     Testing was done using JEST framework to test our service in different ways.
 
     TSLINT was used to as the linter for the service to ensure good format.
@@ -192,3 +194,4 @@ This project aims to build a Vending machine where a user can buy products and s
  ## Limitations
     Due to limitation of time : 
         * We can add more separate unit tests to test each function on its own with many input to ensure that the function more robust and can handle different scenarios, also we can add more tests in general.
+        * Making a refresh token and access token to be used with JWT.
