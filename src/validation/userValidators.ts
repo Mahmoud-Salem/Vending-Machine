@@ -21,6 +21,7 @@ const checkRegisterData:any[] = [
         .exists().withMessage({message: "Role is missing"}).bail()
         .isString()
         .custom((value:any) => {
+
             if(Object.values(Role).includes(value) )
                 return true ;
             else return false ;

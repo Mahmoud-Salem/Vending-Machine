@@ -83,7 +83,7 @@ const user = {
         };
         try {
             await prisma.user.update({where:{id : req.body.decoded.id} , data:userData});
-            res.status(201).json({message:'Updated Successfully'});
+            res.status(200).json({message:'Updated Successfully'});
         }
         catch(e){
             res.status(500).json({message : 'Internal Server Error !!'});
@@ -104,7 +104,7 @@ const user = {
             {
                 deposit=  await prisma.user.delete({where:{id : req.body.decoded.id}});
             }
-            res.status(201).json({message:'Deleted Successfully', returnedMoney : deposit.deposit});
+            res.status(200).json({message:'Deleted Successfully', returnedMoney : deposit.deposit});
         }
         catch(e){
             res.status(500).json({message : 'Internal Server Error !!'});
@@ -129,7 +129,7 @@ const user = {
 
         try {
             await prisma.user.update({where:{id : req.body.decoded.id} , data:{deposit : {increment : money} }});
-            res.status(201).json({message:'Deposited Successfully'});
+            res.status(200).json({message:'Deposited Successfully'});
         }
         catch(e){
             res.status(500).json({message : 'Internal Server Error !!'});
@@ -184,7 +184,7 @@ const user = {
                 remainingPrice = remainingPrice% config.COINS[i] ;
             }
 
-            res.status(201).json({message:'Purchased Successfully', product : product.name, change});
+            res.status(200).json({message:'Purchased Successfully', product : product.name, change});
         }
         catch(e){
             res.status(500).json({message : 'Internal Server Error !!'});
@@ -216,7 +216,7 @@ const user = {
                 remainingPrice = remainingPrice% config.COINS[i] ;
             }
 
-            res.status(201).json({message:'Refunded Successfully', change});
+            res.status(200).json({message:'Refunded Successfully', change});
         }
         catch(e){
             res.status(500).json({message : 'Internal Server Error !!'});

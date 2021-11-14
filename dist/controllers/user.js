@@ -47,7 +47,7 @@ const user = {
             const currentUser = yield database_1.default.user.findUnique({ where: { username: req.body.username } });
             const pass = bcrypt_1.default.compareSync(req.body.password, currentUser.password);
             if (pass === false || currentUser.active === false)
-                res.status(400).json({ message: 'Incorrect username or password !!' });
+                return res.status(400).json({ message: 'Incorrect username or password !!' });
             delete currentUser.password;
             delete currentUser.active;
             const accessToken = jsonwebtoken_1.default.sign(currentUser, config_1.default.SECRET, { expiresIn: '1d' });
@@ -63,6 +63,8 @@ const user = {
             const currentUser = yield database_1.default.user.findUnique({ where: { username: req.body.decoded.username } });
             delete currentUser.password;
             delete currentUser.active;
+            if (currentUser.active === false)
+                return res.status(400).json({ message: 'Incorrect username or password !!' });
             res.status(200).json({ user: currentUser });
         }
         catch (e) {
@@ -82,7 +84,7 @@ const user = {
         };
         try {
             yield database_1.default.user.update({ where: { id: req.body.decoded.id }, data: userData });
-            res.status(201).json({ message: 'Updated Successfully' });
+            res.status(200).json({ message: 'Updated Successfully' });
         }
         catch (e) {
             res.status(500).json({ message: 'Internal Server Error !!' });
@@ -99,7 +101,7 @@ const user = {
             else {
                 deposit = yield database_1.default.user.delete({ where: { id: req.body.decoded.id } });
             }
-            res.status(201).json({ message: 'Deleted Successfully', returnedMoney: deposit.deposit });
+            res.status(200).json({ message: 'Deleted Successfully', returnedMoney: deposit.deposit });
         }
         catch (e) {
             res.status(500).json({ message: 'Internal Server Error !!' });
@@ -117,7 +119,7 @@ const user = {
         }
         try {
             yield database_1.default.user.update({ where: { id: req.body.decoded.id }, data: { deposit: { increment: money } } });
-            res.status(201).json({ message: 'Deposited Successfully' });
+            res.status(200).json({ message: 'Deposited Successfully' });
         }
         catch (e) {
             res.status(500).json({ message: 'Internal Server Error !!' });
@@ -162,7 +164,7 @@ const user = {
                 change[i] = temp;
                 remainingPrice = remainingPrice % config_1.default.COINS[i];
             }
-            res.status(201).json({ message: 'Purchased Successfully', product: product.name, change });
+            res.status(200).json({ message: 'Purchased Successfully', product: product.name, change });
         }
         catch (e) {
             res.status(500).json({ message: 'Internal Server Error !!' });
@@ -188,7 +190,7 @@ const user = {
                 change[i] = temp;
                 remainingPrice = remainingPrice % config_1.default.COINS[i];
             }
-            res.status(201).json({ message: 'Refunded Successfully', change });
+            res.status(200).json({ message: 'Refunded Successfully', change });
         }
         catch (e) {
             res.status(500).json({ message: 'Internal Server Error !!' });

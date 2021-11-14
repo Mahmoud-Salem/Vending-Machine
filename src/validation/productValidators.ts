@@ -3,9 +3,8 @@ import  { check, validationResult } from 'express-validator';
 
 const checkProductData:any[] = [
     check('name')
-        .exists().withMessage({message:'Username should be provided'}).bail()
-        .isString()
-        .isAlphanumeric().withMessage({message:'Username should not contain special characters'}).bail(),
+        .exists().withMessage({message:'name should be provided'}).bail()
+        .isString().withMessage({message:'name should be string'}).bail(),
 
     check('cost')
         .exists().withMessage({message:'cost should be provided'}).bail()

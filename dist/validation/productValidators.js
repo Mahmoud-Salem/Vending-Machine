@@ -4,9 +4,8 @@ exports.checkUpdatedData = exports.checkProductData = void 0;
 const express_validator_1 = require("express-validator");
 const checkProductData = [
     (0, express_validator_1.check)('name')
-        .exists().withMessage({ message: 'Username should be provided' }).bail()
-        .isString()
-        .isAlphanumeric().withMessage({ message: 'Username should not contain special characters' }).bail(),
+        .exists().withMessage({ message: 'name should be provided' }).bail()
+        .isString().withMessage({ message: 'name should be string' }).bail(),
     (0, express_validator_1.check)('cost')
         .exists().withMessage({ message: 'cost should be provided' }).bail()
         .isNumeric().withMessage({ message: 'cost should be a number' }).bail(),
